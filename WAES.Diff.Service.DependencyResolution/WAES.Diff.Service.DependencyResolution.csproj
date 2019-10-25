@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WAES.Diff.Service.Application\WAES.Diff.Service.Domain.csproj" />
+    <ProjectReference Include="..\WAES.Diff.Service.Infrastructure\WAES.Diff.Service.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
