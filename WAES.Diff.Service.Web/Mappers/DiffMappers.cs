@@ -8,8 +8,8 @@ namespace WAES.Diff.Service.Web.Mappers
     {
         public DiffMappers()
         {
-            CreateMap<DiffResponse, DiffResult>();
-            CreateMap<Models.Responses.Diff, Domain.Entities.Diff>();
+            CreateMap<DiffResult, DiffResponse>();
+            CreateMap<DiffDetail, Models.Responses.Diff>();
         }
     }
 }

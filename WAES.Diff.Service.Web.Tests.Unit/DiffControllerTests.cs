@@ -17,9 +17,11 @@ using Xunit;
 
 namespace WAES.Diff.Service.Web.Tests.Unit
 {
+    //TODO Add Unit tests for bad request
     public class DiffControllerTests
     {
         private readonly Mock<IDiffService> _mockDiffService;
+        private readonly Mock<IEntryService> _mockEntryService;
         private readonly Mock<IMapper> _mockMapper;
 
         private readonly DiffController _objectToTest;
@@ -27,9 +29,10 @@ namespace WAES.Diff.Service.Web.Tests.Unit
         public DiffControllerTests()
         {
             _mockDiffService = new Mock<IDiffService>();
+            _mockEntryService = new Mock<IEntryService>();
             _mockMapper = new Mock<IMapper>();
 
-            _objectToTest = new DiffController(_mockDiffService.Object, _mockMapper.Object);
+            _objectToTest = new DiffController(_mockEntryService.Object, _mockDiffService.Object, _mockMapper.Object);
         }
 
         public class SetDiffLeftTests :  DiffControllerTests
@@ -41,7 +44,7 @@ namespace WAES.Diff.Service.Web.Tests.Unit
                 await _objectToTest.SetDiffLeft(id, request);
 
                 // Assert
-                _mockDiffService.Verify(x => x.AddSideToCompare(id, request.Data, Side.Left), Times.Once);
+                _mockEntryService.Verify(x => x.AddSideToCompare(id, request.Data, Side.Left), Times.Once);
             }
 
             [Theory, AutoData]
@@ -62,7 +65,7 @@ namespace WAES.Diff.Service.Web.Tests.Unit
             public async Task Returns_Internal_Server_Error_Response_If_Exception_Thrown(DiffRequest request, Guid id)
             {
                 // Arrange
-                _mockDiffService
+                _mockEntryService
                     .Setup(x => x.AddSideToCompare(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<Side>()))
                     .Throws<Exception>();
 
@@ -89,7 +92,7 @@ namespace WAES.Diff.Service.Web.Tests.Unit
                 await _objectToTest.SetDiffRight(id, request);
 
                 // Assert
-                _mockDiffService.Verify(x => x.AddSideToCompare(id, request.Data, Side.Right), Times.Once);
+                _mockEntryService.Verify(x => x.AddSideToCompare(id, request.Data, Side.Right), Times.Once);
             }
 
             [Theory, AutoData]
@@ -110,7 +113,7 @@ namespace WAES.Diff.Service.Web.Tests.Unit
             public async Task Returns_Internal_Server_Error_Response_If_Exception_Thrown(DiffRequest request, Guid id)
             {
                 // Arrange
-                _mockDiffService
+                _mockEntryService
                     .Setup(x => x.AddSideToCompare(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<Side>()))
                     .Throws<Exception>();
 
@@ -199,7 +202,7 @@ namespace WAES.Diff.Service.Web.Tests.Unit
             }
 
             [Theory, AutoData]
-            public async Task Returns_Internal_Server_Error_Response_If_Exception_Thrown(DiffRequest request, Guid id)
+            public async Task Returns_Internal_Server_Error_Response_If_Exception_Thrown(Guid id)
             {
                 // Arrange
                 _mockDiffService

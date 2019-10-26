@@ -1,6 +1,6 @@
 ﻿namespace WAES.Diff.Service.Domain.Entities
 {
-    public class Diff
+    public class DiffDetail
     {
         public int Offset { get; set; }
         public int Length { get; set; }

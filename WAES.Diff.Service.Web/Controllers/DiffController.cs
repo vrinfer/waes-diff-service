@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using WAES.Diff.Service.Common.Enums;
+using WAES.Diff.Service.Common.Exceptions;
 using WAES.Diff.Service.Domain.Interfaces;
 using WAES.Diff.Service.Web.Models.Requests;
 using WAES.Diff.Service.Web.Models.Responses;
@@ -15,11 +16,13 @@ namespace WAES.Diff.Service.Web.Controllers
     [ApiController]
     public class DiffController : ControllerBase
     {
+        private readonly IEntryService _entryService;
         private readonly IDiffService _diffService;
         private readonly IMapper _mapper;
 
-        public DiffController(IDiffService diffService, IMapper mapper)
+        public DiffController(IEntryService entryService, IDiffService diffService, IMapper mapper)
         {
+            _entryService = entryService;
             _diffService = diffService;
             _mapper = mapper;
         }
@@ -39,9 +42,13 @@ namespace WAES.Diff.Service.Web.Controllers
         {
             try
             {
-                await _diffService.AddSideToCompare(id, request.Data, Side.Left);
+                await _entryService.AddSideToCompare(id, request.Data, Side.Left);
 
                 return Ok();
+            }
+            catch(InvalidInputException ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
             catch (Exception)
             {
@@ -56,17 +63,23 @@ namespace WAES.Diff.Service.Web.Controllers
         /// <param name="request">The binary data to compare encoded in base64</param>
         /// <returns>If the item was added</returns>
         /// <response code="200">Ok</response>
+        /// <response code="400">Bad Request</response>
         /// <response code="500">Internal Server Error</response>
         [HttpPost("{id}/right")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> SetDiffRight(Guid id, [FromBody] DiffRequest request)
         {
             try
             {
-                await _diffService.AddSideToCompare(id, request.Data, Side.Right);
+                await _entryService.AddSideToCompare(id, request.Data, Side.Right);
 
                 return Ok();
+            }
+            catch (InvalidInputException ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
             catch (Exception)
             {
@@ -80,9 +93,11 @@ namespace WAES.Diff.Service.Web.Controllers
         /// <param name="id">The id to identify the two sides from the diff</param>
         /// <returns>Whether the data in both sides is equal, differs in size or the offset and length of the differences</returns>
         /// <response code="200">Ok</response>
+        /// <response code="400">Bad Request</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(DiffResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetDiff(Guid id)
         {

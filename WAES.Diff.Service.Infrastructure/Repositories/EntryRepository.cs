@@ -7,12 +7,17 @@ namespace WAES.Diff.Service.Infrastructure.Repositories
 {
     public class EntryRepository : IEntryRepository
     {
-        public Task GetByExternalId(Guid id)
+        public Task Insert(Entry entry)
         {
             throw new NotImplementedException();
         }
 
-        public Task Upsert(Entry entry)
+        public Task Update(Entry entry)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Entry> GetByExternalId(Guid id)
         {
             throw new NotImplementedException();
         }

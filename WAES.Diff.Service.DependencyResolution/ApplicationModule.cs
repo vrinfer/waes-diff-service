@@ -10,6 +10,10 @@ namespace WAES.Diff.Service.DependencyResolution
         public static void RegisterServices(this IServiceCollection services)
         {
             services.AddTransient<IDiffService, DiffService>();
+            services.AddTransient<IEntryService, EntryService>();
+
+            services.AddTransient<IDiffCalculator, DiffCalculator>();
+
             services.AddTransient<IEntryRepository, EntryRepository>();
         }
     }

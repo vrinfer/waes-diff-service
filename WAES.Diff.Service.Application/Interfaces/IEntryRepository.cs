@@ -6,8 +6,8 @@ namespace WAES.Diff.Service.Domain.Interfaces
 {
     public interface IEntryRepository
     {
-        Task Upsert(Entry entry);
-
-        Task GetByExternalId(Guid id);
+        Task Insert(Entry entry);
+        Task Update(Entry entry);
+        Task<Entry> GetByExternalId(Guid id);
     }
 }
