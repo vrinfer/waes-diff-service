@@ -13,7 +13,7 @@ namespace WAES.Diff.Service.Domain.Services
             throw new NotImplementedException();
         }
 
-        public Task<DiffResult> CompareData(Guid id)
+        public Task<DiffResult> GetDiff(Guid id)
         {
             throw new NotImplementedException();
         }

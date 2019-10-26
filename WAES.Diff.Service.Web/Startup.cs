@@ -1,9 +1,11 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
+using System.Reflection;
 using WAES.Diff.Service.DependencyResolution;
 
 namespace WAES.Diff.Service.Web
@@ -22,6 +24,9 @@ namespace WAES.Diff.Service.Web
             services.AddControllers();
 
             services.RegisterServices();
+
+            //TODO Move magic string to a constants class?
+            services.AddAutoMapper(Assembly.Load("WAES.Diff.Service.Web"));
 
             //TODO Move to a helper
             services.AddSwaggerGen(config =>

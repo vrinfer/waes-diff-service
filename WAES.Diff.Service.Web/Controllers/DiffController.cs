@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using WAES.Diff.Service.Common.Enums;
+using WAES.Diff.Service.Domain.Interfaces;
 using WAES.Diff.Service.Web.Models.Requests;
 using WAES.Diff.Service.Web.Models.Responses;
 
@@ -12,6 +15,15 @@ namespace WAES.Diff.Service.Web.Controllers
     [ApiController]
     public class DiffController : ControllerBase
     {
+        private readonly IDiffService _diffService;
+        private readonly IMapper _mapper;
+
+        public DiffController(IDiffService diffService, IMapper mapper)
+        {
+            _diffService = diffService;
+            _mapper = mapper;
+        }
+
         /// <summary>
         /// Sets the left side to diff out
         /// </summary>
@@ -23,9 +35,18 @@ namespace WAES.Diff.Service.Web.Controllers
         [HttpPost("{id}/left")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public Task<ActionResult> SetDiffLeft(DiffRequest request, Guid id)
+        public async Task<ActionResult> SetDiffLeft(Guid id, [FromBody] DiffRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _diffService.AddSideToCompare(id, request.Data, Side.Left);
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected Error");
+            }
         }
 
         /// <summary>
@@ -39,9 +60,18 @@ namespace WAES.Diff.Service.Web.Controllers
         [HttpPost("{id}/right")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public Task<ActionResult> SetDiffRight(Guid id, [FromBody] DiffRequest request)
+        public async Task<ActionResult> SetDiffRight(Guid id, [FromBody] DiffRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _diffService.AddSideToCompare(id, request.Data, Side.Right);
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected Error");
+            }
         }
 
         /// <summary>
@@ -54,9 +84,20 @@ namespace WAES.Diff.Service.Web.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(DiffResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public Task<IActionResult> GetDiff(Guid id, [FromBody] DiffRequest request)
+        public async Task<IActionResult> GetDiff(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var diff = await _diffService.GetDiff(id);
+
+                var result = _mapper.Map<DiffResponse>(diff);
+
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected Error");
+            }
         }
     }
 }

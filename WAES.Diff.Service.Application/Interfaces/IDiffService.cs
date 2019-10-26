@@ -8,6 +8,6 @@ namespace WAES.Diff.Service.Domain.Interfaces
     public interface IDiffService
     {
         Task AddSideToCompare(Guid id, string data, Side side);
-        Task<DiffResult> CompareData(Guid id);
+        Task<DiffResult> GetDiff(Guid id);
     }
 }
