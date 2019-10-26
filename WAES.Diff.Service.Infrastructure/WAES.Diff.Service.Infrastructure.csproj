@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\WAES.Diff.Service.Application\WAES.Diff.Service.Domain.csproj" />
   </ItemGroup>
 

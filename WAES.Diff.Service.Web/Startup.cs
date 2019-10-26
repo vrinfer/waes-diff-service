@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
+using WAES.Diff.Service.DependencyResolution;
 
 namespace WAES.Diff.Service.Web
 {
@@ -20,6 +21,9 @@ namespace WAES.Diff.Service.Web
         {
             services.AddControllers();
 
+            services.RegisterServices();
+
+            //TODO Move to a helper
             services.AddSwaggerGen(config =>
             {
                 config.SwaggerDoc("v1", new OpenApiInfo
@@ -42,6 +46,7 @@ namespace WAES.Diff.Service.Web
             app.UseSwagger();
             app.UseSwaggerUI(config =>
             {
+                //TODO Move to a helper
                 config.SwaggerEndpoint("/swagger/v1/swagger.json", "WAES Diff Service");
             });
 

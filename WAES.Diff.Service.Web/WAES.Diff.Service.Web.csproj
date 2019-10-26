@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WAES.Diff.Service.Application\WAES.Diff.Service.Domain.csproj" />
+    <ProjectReference Include="..\WAES.Diff.Service.DependencyResolution\WAES.Diff.Service.DependencyResolution.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -5,9 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="Services\" />
+    <ProjectReference Include="..\WAES.Diff.Service.Common\WAES.Diff.Service.Common.csproj" />
   </ItemGroup>
 
 </Project>

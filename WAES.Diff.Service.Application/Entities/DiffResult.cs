@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using WAES.Diff.Service.Common.Enums;
 
-namespace WAES.Diff.Service.Web.Models.Responses
+namespace WAES.Diff.Service.Domain.Entities
 {
-    public class DiffResponse
+    public class DiffResult
     {
         public DiffStatus Status { get; set; }
         public IEnumerable<Diff> Differences { get; set; }

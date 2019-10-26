@@ -1,6 +1,6 @@
-﻿namespace WAES.Diff.Service.Domain.Entities
+﻿namespace WAES.Diff.Service.Common.Enums
 {
-    public enum DiffResults
+    public enum DiffStatus
     {
         Equal,
         UnmatchedSize,
