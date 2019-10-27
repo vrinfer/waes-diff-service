@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using WAES.Diff.Service.Common.Enums;
 using WAES.Diff.Service.Common.Exceptions;
+using WAES.Diff.Service.Domain.Enums;
 using WAES.Diff.Service.Domain.Interfaces;
 using WAES.Diff.Service.Web.Models.Requests;
 using WAES.Diff.Service.Web.Models.Responses;
@@ -34,6 +34,7 @@ namespace WAES.Diff.Service.Web.Controllers
         /// <param name="id">The id to identify the two sides from the diff</param>
         /// <param name="request">The binary data to compare encoded in base64</param>
         /// <response code="200">Ok</response>
+        /// <response code="400">Bad Request</response>
         /// <response code="500">Internal Server Error</response>
         [HttpPost("{id}/left")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -108,6 +109,10 @@ namespace WAES.Diff.Service.Web.Controllers
                 var result = _mapper.Map<DiffResponse>(diff);
 
                 return Ok(result);
+            }
+            catch(EntityNotFoundException ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
             catch (Exception)
             {

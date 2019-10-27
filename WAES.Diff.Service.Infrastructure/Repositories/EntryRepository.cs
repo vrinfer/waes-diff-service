@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
+using WAES.Diff.Service.Common.Exceptions;
 using WAES.Diff.Service.Domain.Entities;
 using WAES.Diff.Service.Domain.Interfaces;
 
@@ -7,19 +9,28 @@ namespace WAES.Diff.Service.Infrastructure.Repositories
 {
     public class EntryRepository : IEntryRepository
     {
-        public Task Insert(Entry entry)
+        private readonly DiffServiceDbContext _dbContext;
+
+        public EntryRepository(DiffServiceDbContext dbContext)
         {
-            throw new NotImplementedException();
+            _dbContext = dbContext;
         }
 
-        public Task Update(Entry entry)
+        public async Task Insert(Entry entry)
         {
-            throw new NotImplementedException();
+            await _dbContext.Entries.AddAsync(entry);
+            await _dbContext.SaveChangesAsync();
         }
 
-        public Task<Entry> GetByExternalId(Guid id)
+        public async Task Update(Entry entry)
         {
-            throw new NotImplementedException();
+            _dbContext.Entries.Update(entry);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<Entry> GetByExternalId(Guid id)
+        {
+            return await _dbContext.Entries.FirstOrDefaultAsync(e => e.ExternalId == id);
         }
     }
 }

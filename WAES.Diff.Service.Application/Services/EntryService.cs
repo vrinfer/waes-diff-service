@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using WAES.Diff.Service.Common.Enums;
 using WAES.Diff.Service.Common.Exceptions;
 using WAES.Diff.Service.Domain.Entities;
+using WAES.Diff.Service.Domain.Enums;
 using WAES.Diff.Service.Domain.Helpers;
 using WAES.Diff.Service.Domain.Interfaces;
 

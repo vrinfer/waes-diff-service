@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using WAES.Diff.Service.Common.Enums;
+using WAES.Diff.Service.Domain.Enums;
 
 namespace WAES.Diff.Service.Domain.Entities
 {

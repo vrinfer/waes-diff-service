@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using WAES.Diff.Service.Common.Enums;
+using WAES.Diff.Service.Domain.Enums;
 
 namespace WAES.Diff.Service.Domain.Interfaces
 {

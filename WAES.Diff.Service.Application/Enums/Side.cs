@@ -1,4 +1,4 @@
-﻿namespace WAES.Diff.Service.Common.Enums
+﻿namespace WAES.Diff.Service.Domain.Enums
 {
     public enum Side
     {
