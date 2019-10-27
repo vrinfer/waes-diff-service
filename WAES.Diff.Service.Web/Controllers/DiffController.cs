@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using WAES.Diff.Service.Common.Exceptions;
 using WAES.Diff.Service.Domain.Entities;
 using WAES.Diff.Service.Domain.Enums;
-using WAES.Diff.Service.Domain.Interfaces;
+using WAES.Diff.Service.Domain.Interfaces.Services;
 using WAES.Diff.Service.Web.Models.Requests;
 
 namespace WAES.Diff.Service.Web.Controllers
@@ -38,20 +38,7 @@ namespace WAES.Diff.Service.Web.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> SetDiffLeft(Guid id, [FromBody] DiffRequest request)
         {
-            try
-            {
-                await _entryService.AddSideToCompare(id, request.Data, Side.Left);
-
-                return Ok();
-            }
-            catch(InvalidInputException ex)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected Error");
-            }
+            return await SetDiffSide(id, request, Side.Left);
         }
 
         /// <summary>
@@ -69,20 +56,7 @@ namespace WAES.Diff.Service.Web.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> SetDiffRight(Guid id, [FromBody] DiffRequest request)
         {
-            try
-            {
-                await _entryService.AddSideToCompare(id, request.Data, Side.Right);
-
-                return Ok();
-            }
-            catch (InvalidInputException ex)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected Error");
-            }
+            return await SetDiffSide(id, request, Side.Right);
         }
 
         /// <summary>
@@ -108,6 +82,28 @@ namespace WAES.Diff.Service.Web.Controllers
             catch(EntityNotFoundException ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+            catch (InvalidInputException ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected Error");
+            }
+        }
+
+        private async Task<ActionResult> SetDiffSide(Guid id, DiffRequest request, Side side)
+        {
+            try
+            {
+                await _entryService.AddSideToCompare(id, request.Data, side);
+
+                return Ok();
+            }
+            catch (InvalidInputException ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
             catch (Exception)
             {

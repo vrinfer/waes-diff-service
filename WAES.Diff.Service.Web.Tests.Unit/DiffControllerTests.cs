@@ -8,14 +8,13 @@ using System;
 using System.Threading.Tasks;
 using WAES.Diff.Service.Domain.Entities;
 using WAES.Diff.Service.Domain.Enums;
-using WAES.Diff.Service.Domain.Interfaces;
+using WAES.Diff.Service.Domain.Interfaces.Services;
 using WAES.Diff.Service.Web.Controllers;
 using WAES.Diff.Service.Web.Models.Requests;
 using Xunit;
 
 namespace WAES.Diff.Service.Web.Tests.Unit
 {
-    //TODO Add Unit tests for bad request
     public class DiffControllerTests
     {
         private readonly Mock<IDiffService> _mockDiffService;

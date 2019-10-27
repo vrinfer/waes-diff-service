@@ -1,28 +1,27 @@
 ﻿using System;
 using System.Threading.Tasks;
-using WAES.Diff.Service.Common.Exceptions;
 using WAES.Diff.Service.Domain.Entities;
 using WAES.Diff.Service.Domain.Enums;
-using WAES.Diff.Service.Domain.Helpers;
 using WAES.Diff.Service.Domain.Interfaces;
+using WAES.Diff.Service.Domain.Interfaces.Services;
+using WAES.Diff.Service.Domain.Interfaces.Validators;
 
 namespace WAES.Diff.Service.Domain.Services
 {
     public class EntryService : IEntryService
     {
         private readonly IEntryRepository _entryRepository;
+        private readonly IBase64Validator _base64Validator;
 
-        public EntryService(IEntryRepository entryRepository)
+        public EntryService(IEntryRepository entryRepository, IBase64Validator base64Validator)
         {
             _entryRepository = entryRepository;
+            _base64Validator = base64Validator;
         }
 
         public async Task AddSideToCompare(Guid id, string data, Side side)
         {
-            if (!Base64Helper.IsValidInput(data))
-            {
-                throw new InvalidInputException();
-            }
+            _base64Validator.ValidateBase64String(data);
 
             var entry = await _entryRepository.GetByExternalId(id);
 

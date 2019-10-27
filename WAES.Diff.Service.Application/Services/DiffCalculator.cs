@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using WAES.Diff.Service.Domain.Entities;
-using WAES.Diff.Service.Domain.Interfaces;
+using WAES.Diff.Service.Domain.Interfaces.Services;
 
 namespace WAES.Diff.Service.Domain.Services
 {
