@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using WAES.Diff.Service.Common;
 using WAES.Diff.Service.Common.Exceptions;
 using WAES.Diff.Service.Domain.Entities;
 using WAES.Diff.Service.Domain.Enums;
@@ -89,7 +90,7 @@ namespace WAES.Diff.Service.Web.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected Error");
+                return StatusCode(StatusCodes.Status500InternalServerError, Constants.UNEXPECTED_ERROR);
             }
         }
 
@@ -107,7 +108,7 @@ namespace WAES.Diff.Service.Web.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected Error");
+                return StatusCode(StatusCodes.Status500InternalServerError, Constants.UNEXPECTED_ERROR);
             }
         }
     }

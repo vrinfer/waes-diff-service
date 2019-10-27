@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Text.Json.Serialization;
+using WAES.Diff.Service.Common;
 using WAES.Diff.Service.DependencyResolution;
 using WAES.Diff.Service.Infrastructure;
 
@@ -38,16 +39,16 @@ namespace WAES.Diff.Service.Web
             //TODO Move to a helper
             services.AddSwaggerGen(config =>
             {
-                config.SwaggerDoc("v1", new OpenApiInfo
+                config.SwaggerDoc(Constants.API_VERSION, new OpenApiInfo
                 {
-                    Version = "v1",
-                    Title = "WAES Diff Service",
-                    Description = "A simple diff API",
+                    Version = Constants.API_VERSION,
+                    Title = Constants.API_NAME,
+                    Description = Constants.API_DESCRIPTION,
                     Contact = new OpenApiContact
                     {
-                        Name = "Valeria Infer",
-                        Email = "valeinfer@gmail.com",
-                        Url = new Uri("https://github.com/vrinfer"),
+                        Name = Constants.CONTACT_NAME,
+                        Email = Constants.CONTACT_EMAIL,
+                        Url = new Uri(Constants.CONTACT_GITHUB),
                     }
                 });
             });
@@ -58,8 +59,7 @@ namespace WAES.Diff.Service.Web
             app.UseSwagger();
             app.UseSwaggerUI(config =>
             {
-                //TODO Move to a helper
-                config.SwaggerEndpoint("/swagger/v1/swagger.json", "WAES Diff Service");
+                config.SwaggerEndpoint(Constants.API_ENDPOINT, Constants.API_NAME);
             });
 
             app.UseHttpsRedirection();
