@@ -1,13 +1,12 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using WAES.Diff.Service.Common.Exceptions;
+using WAES.Diff.Service.Domain.Entities;
 using WAES.Diff.Service.Domain.Enums;
 using WAES.Diff.Service.Domain.Interfaces;
 using WAES.Diff.Service.Web.Models.Requests;
-using WAES.Diff.Service.Web.Models.Responses;
 
 namespace WAES.Diff.Service.Web.Controllers
 {
@@ -18,13 +17,11 @@ namespace WAES.Diff.Service.Web.Controllers
     {
         private readonly IEntryService _entryService;
         private readonly IDiffService _diffService;
-        private readonly IMapper _mapper;
 
-        public DiffController(IEntryService entryService, IDiffService diffService, IMapper mapper)
+        public DiffController(IEntryService entryService, IDiffService diffService)
         {
             _entryService = entryService;
             _diffService = diffService;
-            _mapper = mapper;
         }
 
         /// <summary>
@@ -97,16 +94,14 @@ namespace WAES.Diff.Service.Web.Controllers
         /// <response code="400">Bad Request</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(DiffResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(DiffResult), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetDiff(Guid id)
         {
             try
             {
-                var diff = await _diffService.GetDiff(id);
-
-                var result = _mapper.Map<DiffResponse>(diff);
+                var result = await _diffService.GetDiff(id);
 
                 return Ok(result);
             }

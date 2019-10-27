@@ -1,13 +1,12 @@
-using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Reflection;
+using System.Text.Json.Serialization;
 using WAES.Diff.Service.DependencyResolution;
-using Microsoft.EntityFrameworkCore;
 using WAES.Diff.Service.Infrastructure;
 
 namespace WAES.Diff.Service.Web
@@ -29,8 +28,12 @@ namespace WAES.Diff.Service.Web
 
             services.AddDbContext<DiffServiceDbContext>(options => options.UseInMemoryDatabase(databaseName: "DiffService"));
 
-            //TODO Move magic string to a constants class?
-            services.AddAutoMapper(Assembly.Load("WAES.Diff.Service.Web"));
+            services.AddMvc()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                    options.JsonSerializerOptions.IgnoreNullValues = true;
+                });
 
             //TODO Move to a helper
             services.AddSwaggerGen(config =>

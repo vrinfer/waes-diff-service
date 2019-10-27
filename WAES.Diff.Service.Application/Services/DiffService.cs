@@ -46,7 +46,7 @@ namespace WAES.Diff.Service.Domain.Services
             return new DiffResult
             {
                 Status = diffs.Any() ? DiffStatus.NotEqual : DiffStatus.Equal,
-                Differences = diffs
+                Differences = diffs.Any() ? diffs : null
             };
         }
 
