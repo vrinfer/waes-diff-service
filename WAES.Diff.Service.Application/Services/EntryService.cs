@@ -29,8 +29,10 @@ namespace WAES.Diff.Service.Domain.Services
             {
                 await UpdateEntry(data, side, entry);
             }
-
-            await InsertNewEntry(id, data, side);
+            else
+            {
+                await InsertNewEntry(id, data, side);
+            }
         }
 
         private async Task InsertNewEntry(Guid id, string data, Side side)

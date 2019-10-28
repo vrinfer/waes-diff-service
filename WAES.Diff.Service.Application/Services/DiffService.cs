@@ -39,7 +39,7 @@ namespace WAES.Diff.Service.Domain.Services
                 return new DiffResult(DiffStatus.UnmatchedSize);
             }
 
-            List<DiffDetail> diffs = _diffCalculator.GetComputedDiffs(leftByteArray, rightByteArray);
+            var diffs = _diffCalculator.GetComputedDiffs(leftByteArray, rightByteArray);
             
             return new DiffResult(diffs);
         }

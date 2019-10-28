@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
-using WAES.Diff.Service.Common.Exceptions;
 using WAES.Diff.Service.Domain.Entities;
 using WAES.Diff.Service.Domain.Interfaces;
 

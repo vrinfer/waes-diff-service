@@ -19,6 +19,7 @@ namespace WAES.Diff.Service.Domain.Entities
         public DiffResult(DiffStatus status)
         {
             Status = status;
+            Differences = null;
         }
     }
 }
