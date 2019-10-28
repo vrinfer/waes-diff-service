@@ -23,20 +23,16 @@ namespace WAES.Diff.Service.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-
             services.RegisterServices();
+
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                options.JsonSerializerOptions.IgnoreNullValues = true;
+            }); ;
 
             services.AddDbContext<DiffServiceDbContext>(options => options.UseInMemoryDatabase(databaseName: "DiffService"));
 
-            services.AddMvc()
-                .AddJsonOptions(options =>
-                {
-                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                    options.JsonSerializerOptions.IgnoreNullValues = true;
-                });
-
-            //TODO Move to a helper
             services.AddSwaggerGen(config =>
             {
                 config.SwaggerDoc(Constants.API_VERSION, new OpenApiInfo

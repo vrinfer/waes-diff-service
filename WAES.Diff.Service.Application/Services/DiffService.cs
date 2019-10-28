@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WAES.Diff.Service.Domain.Entities;
@@ -32,24 +31,22 @@ namespace WAES.Diff.Service.Domain.Services
             _entryValidator.ValidateNotNullEntity(entry);
             _base64Validator.ValidateEntry(entry);
 
-            var leftBitArray = GetBitArray(entry.LeftSide);
-            var rightBitArray = GetBitArray(entry.RightSide);
+            var leftByteArray = GetByteArray(entry.LeftSide);
+            var rightByteArray = GetByteArray(entry.RightSide);
 
-            if (leftBitArray.Count != rightBitArray.Length)
+            if (leftByteArray.Length != rightByteArray.Length)
             {
                 return new DiffResult(DiffStatus.UnmatchedSize);
             }
 
-            List<DiffDetail> diffs = _diffCalculator.GetComputedDiffs(leftBitArray, rightBitArray);
+            List<DiffDetail> diffs = _diffCalculator.GetComputedDiffs(leftByteArray, rightByteArray);
             
             return new DiffResult(diffs);
         }
 
-        private BitArray GetBitArray(string data)
+        private byte[] GetByteArray(string data)
         {
-            var bytes = Convert.FromBase64String(data);
-
-            return new BitArray(bytes);
+            return Convert.FromBase64String(data);
         }
     }
 }
