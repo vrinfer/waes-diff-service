@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System;
 using System.Threading.Tasks;
+using WAES.Diff.Service.Common.Exceptions;
 using WAES.Diff.Service.Domain.Entities;
 using WAES.Diff.Service.Domain.Enums;
 using WAES.Diff.Service.Domain.Interfaces.Services;
@@ -43,7 +44,7 @@ namespace WAES.Diff.Service.Web.Tests.Unit
             }
 
             [Theory, AutoData]
-            public async Task Returns_Ok_Response_With_Correct_Object(DiffRequest request, Guid id)
+            public async Task Returns_Ok_Response(DiffRequest request, Guid id)
             {
                 // Act
                 var result = await _objectToTest.SetDiffLeft(id, request);
@@ -74,6 +75,27 @@ namespace WAES.Diff.Service.Web.Tests.Unit
 
                     var objectResult = result as ObjectResult;
                     objectResult.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
+                }
+            }
+
+            [Theory, AutoData]
+            public async Task Returns_Bad_Request_Response_If_Invalid_Input_Exception_Exception_Thrown(DiffRequest request, Guid id)
+            {
+                // Arrange
+                _mockEntryService
+                    .Setup(x => x.AddSideToCompare(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<Side>()))
+                    .Throws<InvalidInputException>();
+
+                // Act
+                var result = await _objectToTest.SetDiffLeft(id, request);
+
+                // Assert
+                using (new AssertionScope())
+                {
+                    result.Should().BeOfType<ObjectResult>();
+
+                    var objectResult = result as ObjectResult;
+                    objectResult.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
                 }
             }
         }
@@ -91,7 +113,7 @@ namespace WAES.Diff.Service.Web.Tests.Unit
             }
 
             [Theory, AutoData]
-            public async Task Returns_Ok_Response_With_Correct_Object(DiffRequest request, Guid id)
+            public async Task Returns_Ok_Response(DiffRequest request, Guid id)
             {
                 // Act
                 var result = await _objectToTest.SetDiffRight(id, request);
@@ -122,6 +144,27 @@ namespace WAES.Diff.Service.Web.Tests.Unit
 
                     var objectResult = result as ObjectResult;
                     objectResult.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
+                }
+            }
+
+            [Theory, AutoData]
+            public async Task Returns_Bad_Request_Response_If_Invalid_Input_Exception_Exception_Thrown(DiffRequest request, Guid id)
+            {
+                // Arrange
+                _mockEntryService
+                    .Setup(x => x.AddSideToCompare(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<Side>()))
+                    .Throws<InvalidInputException>();
+
+                // Act
+                var result = await _objectToTest.SetDiffLeft(id, request);
+
+                // Assert
+                using (new AssertionScope())
+                {
+                    result.Should().BeOfType<ObjectResult>();
+
+                    var objectResult = result as ObjectResult;
+                    objectResult.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
                 }
             }
         }
@@ -187,6 +230,49 @@ namespace WAES.Diff.Service.Web.Tests.Unit
 
                     var objectResult = result as ObjectResult;
                     objectResult.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
+                    objectResult.Value.Should().Be("Unexpected Error");
+                }
+            }
+
+            [Theory, AutoData]
+            public async Task Returns_Bad_Request_Response_If_Invalid_Input_Exception_Exception_Thrown(Guid id)
+            {
+                // Arrange
+                _mockDiffService
+                    .Setup(x => x.GetDiff(It.IsAny<Guid>()))
+                    .Throws<InvalidInputException>();
+
+                // Act
+                var result = await _objectToTest.GetDiff(id);
+
+                // Assert
+                using (new AssertionScope())
+                {
+                    result.Should().BeOfType<ObjectResult>();
+
+                    var objectResult = result as ObjectResult;
+                    objectResult.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
+                }
+            }
+
+            [Theory, AutoData]
+            public async Task Returns_Bad_Request_Response_If_Entity_Not_Found_Exception_Exception_Thrown(Guid id)
+            {
+                // Arrange
+                _mockDiffService
+                    .Setup(x => x.GetDiff(It.IsAny<Guid>()))
+                    .Throws<EntityNotFoundException>();
+
+                // Act
+                var result = await _objectToTest.GetDiff(id);
+
+                // Assert
+                using (new AssertionScope())
+                {
+                    result.Should().BeOfType<ObjectResult>();
+
+                    var objectResult = result as ObjectResult;
+                    objectResult.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
                 }
             }
         }

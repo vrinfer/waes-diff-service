@@ -82,7 +82,7 @@ namespace WAES.Diff.Service.Web.Controllers
             }
             catch(EntityNotFoundException ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
             catch (InvalidInputException ex)
             {
