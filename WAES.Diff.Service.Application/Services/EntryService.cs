@@ -19,6 +19,13 @@ namespace WAES.Diff.Service.Domain.Services
             _base64Validator = base64Validator;
         }
 
+        /// <summary>
+        /// Adds or Updates an entry.
+        /// </summary>
+        /// <param name="id">Identifies an entry which contains the fields to compare</param>
+        /// <param name="data">string representig base64 encoded data</param>
+        /// <param name="side">Identifies the field to update (right or left)</param>
+        /// <returns></returns>
         public async Task AddSideToCompare(Guid id, string data, Side side)
         {
             _base64Validator.ValidateBase64String(data);
@@ -35,22 +42,42 @@ namespace WAES.Diff.Service.Domain.Services
             }
         }
 
+        /// <summary>
+        /// Creates and inserts the entry
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="data"></param>
+        /// <param name="side"></param>
+        /// <returns></returns>
         private async Task InsertNewEntry(Guid id, string data, Side side)
         {
             Entry entry = new Entry
             {
                 ExternalId = id,
-                LeftSide = side == Side.Left ? data : string.Empty,
-                RightSide = side == Side.Right ? data : string.Empty,
+                LeftSide = side == Side.Left ? data : null,
+                RightSide = side == Side.Right ? data : null,
             };
 
             await _entryRepository.Insert(entry);
         }
 
+        /// <summary>
+        /// Updates and existing entry and impacts it in the DB
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="side"></param>
+        /// <param name="entry"></param>
+        /// <returns></returns>
         private async Task UpdateEntry(string data, Side side, Entry entry)
         {
-            if (side == Side.Left) entry.LeftSide = data;
-            entry.RightSide = data;
+            if (side == Side.Left)
+            {
+                entry.LeftSide = data;
+            }
+            else
+            {
+                entry.RightSide = data;
+            }
 
             await _entryRepository.Update(entry);
         }

@@ -24,6 +24,13 @@ namespace WAES.Diff.Service.Domain.Services
             _diffCalculator = diffCalculator;
         }
 
+        /// <summary>
+        /// Gets the diff result for the given entry comparing the left and right side.
+        /// Throws EntityNotFoundException if the id does not match any entry in the DB
+        /// Throwa InvalidInputException if either left or rigth are null or contain an non base64 encoded string
+        /// </summary>
+        /// <param name="id">Id of the record to diff</param>
+        /// <returns>A result containing the Status (equal, not equal o different size) and a collection of the offset and length of each difference found</returns>
         public async Task<DiffResult> GetDiff(Guid id)
         {
             var entry = await _entryRepository.GetByExternalId(id);
@@ -44,6 +51,11 @@ namespace WAES.Diff.Service.Domain.Services
             return new DiffResult(diffs);
         }
 
+        /// <summary>
+        /// Converets the base64 string to byte array
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         private byte[] GetByteArray(string data)
         {
             return Convert.FromBase64String(data);

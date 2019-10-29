@@ -5,6 +5,6 @@ namespace WAES.Diff.Service.Domain.Interfaces.Services
 {
     public interface IDiffCalculator
     {
-        List<DiffDetail> GetComputedDiffs(byte[] left, byte[] right);
+        IEnumerable<DiffDetail> GetComputedDiffs(byte[] left, byte[] right);
     }
 }

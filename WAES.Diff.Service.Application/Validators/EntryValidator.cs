@@ -7,6 +7,11 @@ namespace WAES.Diff.Service.Domain.Validators
 {
     public class EntryValidator : IEntryValidator
     {
+        /// <summary>
+        /// Validates thar the entry object is not null
+        /// Throws EntityNotFoundException if it is null
+        /// </summary>
+        /// <param name="entity"></param>
         public void ValidateNotNullEntity(Entry entity)
         {
             if (entity == null)

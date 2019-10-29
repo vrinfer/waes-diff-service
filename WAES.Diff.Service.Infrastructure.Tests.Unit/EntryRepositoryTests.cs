@@ -2,11 +2,8 @@ using AutoFixture.Xunit2;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Microsoft.EntityFrameworkCore;
-using Moq;
-using System.Threading;
 using System.Threading.Tasks;
 using WAES.Diff.Service.Domain.Entities;
-using WAES.Diff.Service.Domain.Interfaces;
 using WAES.Diff.Service.Infrastructure.Repositories;
 using Xunit;
 

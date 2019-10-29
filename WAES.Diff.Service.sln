@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WAES.Diff.Service.Web.Tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WAES.Diff.Service.Domain.Tests.Unit", "WAES.Diff.Service.Domain.Tests.Unit\WAES.Diff.Service.Domain.Tests.Unit.csproj", "{974B2E45-F8F0-4D6F-9605-14A08D88B487}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WAES.Diff.Service.Infrastructure.Tests.Unit", "WAES.Diff.Service.Infrastructure.Tests.Unit\WAES.Diff.Service.Infrastructure.Tests.Unit.csproj", "{309DDBED-AFAB-42E0-8AC9-91A78E1D3F75}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WAES.Diff.Service.Infrastructure.Tests.Unit", "WAES.Diff.Service.Infrastructure.Tests.Unit\WAES.Diff.Service.Infrastructure.Tests.Unit.csproj", "{309DDBED-AFAB-42E0-8AC9-91A78E1D3F75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WAES.Diff.Service.Tests.Integration", "WAES.Diff.Service.Tests.Integration\WAES.Diff.Service.Tests.Integration.csproj", "{8662021C-AB79-4DCD-B893-F7138AD847DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{309DDBED-AFAB-42E0-8AC9-91A78E1D3F75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{309DDBED-AFAB-42E0-8AC9-91A78E1D3F75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{309DDBED-AFAB-42E0-8AC9-91A78E1D3F75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8662021C-AB79-4DCD-B893-F7138AD847DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8662021C-AB79-4DCD-B893-F7138AD847DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8662021C-AB79-4DCD-B893-F7138AD847DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8662021C-AB79-4DCD-B893-F7138AD847DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{F1ED8721-8618-4971-99FC-C43880895F76} = {C6B8CC2C-787F-4590-A183-F11D0199577B}
 		{974B2E45-F8F0-4D6F-9605-14A08D88B487} = {C6B8CC2C-787F-4590-A183-F11D0199577B}
 		{309DDBED-AFAB-42E0-8AC9-91A78E1D3F75} = {C6B8CC2C-787F-4590-A183-F11D0199577B}
+		{8662021C-AB79-4DCD-B893-F7138AD847DA} = {C6B8CC2C-787F-4590-A183-F11D0199577B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {24A59CA5-B2EB-4FD4-91E8-2198A8A945C5}
